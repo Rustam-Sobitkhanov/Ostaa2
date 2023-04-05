@@ -20,7 +20,7 @@ function searchListings() {
                     `;
                     const buyButton = itemDiv.querySelector('button[name="buy"]');
                     buyButton.addEventListener('click', function() {
-                        this.innerText = 'SOLD';
+                        this.innerHTML = '<p class="sold">SOLD</p>';
                         this.disable();
                         purchase(item); // call your buyItem function here and pass in the item object
                     });
@@ -59,7 +59,7 @@ function getListings() {
                 <p>${item.description}</p>
                 <p>${item.image}</p>
                 <p>${item.price}</p>
-                <p class="sold">${item.stat}</p>
+                <p class="sold">${item.stat.toUpperCase()}</p>
                 `;
                 itemDiv.classList.add("search-item");
                 searchResultDiv.appendChild(itemDiv);

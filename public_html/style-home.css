@@ -30,6 +30,7 @@
 .search-item p {
     font-size: 16px;
     margin: 5px 0 10px;
+    text-align: center;
 }
 
 .search-item button {
