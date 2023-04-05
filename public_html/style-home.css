@@ -4,6 +4,8 @@
     justify-content: space-around;
     align-items: center;
     margin-top: 20px;
+    height: 55vh;
+    overflow-y: scroll;
 }
 
 .search-item {

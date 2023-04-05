@@ -89,6 +89,7 @@ function addItem() {
     xhr.send(`usrName=${usrName}&title=${title}&desc=${description}&price=${price}&img=${image}&stat=${stat}`);
     if (document.getElementById("add-item-form")) {
         document.getElementById("add-item-form").reset();
+        window.location.href = '/home.html';
     }
 }
 
