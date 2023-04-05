@@ -188,36 +188,6 @@ app.post('/purchaseItem', async (req, res) => {
 });
 
 
-app.get('/image/:imageprompt', async (req, res) => {
-
-    try {
-        const imageprompt = req.params.imageprompt;
-        console.log(imageprompt)
-        const response = await axios({
-            method: 'post',
-            url: 'https://api.openai.com/v1/images/generations',
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${}`
-            },
-            data: {
-                model: 'image-alpha-001',
-                prompt: `Generate an image of ${imageprompt}`,
-                n: 3,
-                size: '256x256',
-                response_format: 'url'
-            }
-        });
-
-        const imageUrl = response.data.data[0].url;
-        res.send(`<img src="${imageUrl}" alt="${imageprompt}">`);
-    } catch (error) {
-        console.error(error);
-        res.status(500).send('Error generating image');
-    }
-});
-
-
 app.listen(3000, () => {
     console.log('Server is listening on port 3000...');
 });

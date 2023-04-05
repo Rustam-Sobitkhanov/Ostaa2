@@ -57,10 +57,11 @@ function getListings() {
                 itemDiv.innerHTML = `
                 <h3>${item.title}</h3>
                 <p>${item.description}</p>
-                <img src="${item.image}" alt="${item.title}">
+                <p>${item.image}</p>
                 <p>${item.price}</p>
-                <p>${item.stat}</p>
-        `;
+                <p class="sold">${item.stat}</p>
+                `;
+                itemDiv.classList.add("search-item");
                 searchResultDiv.appendChild(itemDiv);
             });
         }
@@ -106,9 +107,10 @@ function viewPurchase() {
                 itemDiv.innerHTML = `
                 <h3>${item.title}</h3>
                 <p>${item.description}</p>
-                <img src="${item.image}" alt="${item.title}">
+                <p>${item.image}</p>
                 <p>${item.price}</p>
                 `;
+                itemDiv.classList.add("search-item");
                 searchResultDiv.appendChild(itemDiv);
             });
         }

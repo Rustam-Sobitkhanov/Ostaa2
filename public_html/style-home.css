@@ -11,13 +11,13 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    width: 300px;
-    height: 400px;
+    width: 200px;
+    height: 250px;
     margin: 20px;
     padding: 20px;
     border: 1px solid #ccc;
     border-radius: 5px;
-    background-color: #fff;
+    background-color: lightskyblue;
     box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
 }
 
@@ -29,7 +29,7 @@
 
 .search-item p {
     font-size: 16px;
-    margin: 5px 0;
+    margin: 5px 0 10px;
 }
 
 .search-item button {
@@ -53,8 +53,6 @@
     font-size: 18px;
     font-weight: bold;
 }
-
-
 
 body {
     font-family: Arial, sans-serif;
@@ -108,5 +106,9 @@ button:not(:last-child) {
 
 .button-row button:first-child {
     margin-right: auto;
+}
+
+#sButton {
+    background-color: #008CBA;
 }
 
