@@ -1,9 +1,11 @@
+require('dotenv').config();
 const express = require('express');
 const app = express();
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
 const axios = require('axios');
+
 
 var curUser = "";
 
@@ -134,30 +136,44 @@ app.post('/viewPurchases', async (req, res) => {
 
 
 app.post('/addItem', async (req, res) => {
+
     const { usrName, title, desc, price, img, stat } = req.body;
-    User.findOne({username: usrName})
-        .then(user => {
-            if (!user) {
-                return res.status(500).json({ error: 'User: not found' });
-            }
-            const item = new Item({ title: title, description: desc, image: img, price: price, stat: stat });
-            return item.save().then(item => {
-                user.listings.push(item._id);
-                user.save();
-                return;
-            }).then(() => {
-                console.log(`New item added to ${user.username}'s listings: ${item.title}`);
-                return res.status(200).json({ message: 'Item added successfully' });
-            });
+    //axios.get(`http://localhost:3000/image/${title}`).then(resp){}
+    axios.get(`http://localhost:3000/image/${title +" "+ desc}`)
+        .then(response => {
+            const imgUrl = response.data; // Get the image URL from the response
+                User.findOne({username: usrName})
+                    .then(user => {
+                        if (!user) {
+                            return res.status(500).json({ error: 'User: not found' });
+                        }
+                        const item = new Item({ title: title, description: desc, image: imgUrl, price: price, stat: stat });
+                        return item.save().then(item => {
+                            user.listings.push(item._id);
+                            user.save();
+                            return;
+                        }).then(() => {
+                            console.log(`New item added to ${user.username}'s listings: ${item.title}`);
+                            return res.status(200).json({ message: 'Item added successfully' });
+                        });
+                    })
+                    .catch(err => {
+                        console.error(err);
+                        return res.status(500).json({ error: 'Failed to add item to user' });
+                    });
+
         })
-        .catch(err => {
-            console.error(err);
-            return res.status(500).json({ error: 'Failed to add item to user' });
+        .catch(error => {
+            console.error(error);
+            return res.status(500).json({ error: 'Failed to fetch image' });
         });
+    
+
 });
 
 app.post('/purchaseItem', async (req, res) => {
     const { usrName, title, price, img } = req.body;
+
     User.findOne({ username: usrName })
         .then(user => {
             if (!user) {
@@ -170,7 +186,6 @@ app.post('/purchaseItem', async (req, res) => {
                     }
                     item.stat = 'sold';
                     item.save();
-
                     user.purchases.push(item._id);
                     user.save();
                     console.log(`Item ${item.title} added to ${user.username}'s purchases`);
@@ -188,6 +203,73 @@ app.post('/purchaseItem', async (req, res) => {
 });
 
 
+app.get('/image/:prompt', async (req, res) => {
+    const image = replaceUrlPath(req.params.prompt);
+    const auth =  process.env.API_KEY;
+
+    try {
+      // Make request to DALL-E API
+      const response = await axios.post('https://api.openai.com/v1/images/generations', {
+        model: 'image-alpha-001',
+        prompt: image,
+        num_images: 1
+      }, {
+        headers: {
+          'Authorization': 'Bearer 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', // Replace with your actual API key
+          'Content-Type': 'application/json'
+        }
+      });
+      // Extract image link from the response
+      const imageUrl = response.data.data[0].url;
+  
+      // Send image link to client
+      res.send(`${imageUrl}`);
+    } catch (error) {
+      console.error(error);
+      res.status(500).send('Error occurred while fetching image');
+    }
+  });
+  
+
+
 app.listen(3000, () => {
     console.log('Server is listening on port 3000...');
 });
+
+function replaceUrlPath(urlPath) {
+    // Dictionary to map URL-encoded characters to their corresponding string representations
+    const urlEncodingDict = {
+      '%20': ' ',   // Space
+      '%21': '!',   // Exclamation mark
+      '%22': '"',   // Double quotation mark
+      '%23': '#',   // Hash/pound sign
+      '%24': '$',   // Dollar sign
+      '%25': '%',   // Percent sign
+      '%26': '&',   // Ampersand
+      '%27': '\'',  // Single quotation mark
+      '%28': '(',   // Left parenthesis
+      '%29': ')',   // Right parenthesis
+      '%2A': '*',   // Asterisk
+      '%2B': '+',   // Plus sign
+      '%2C': ',',   // Comma
+      '%2D': '-',   // Hyphen/minus sign
+      '%2E': '.',   // Period/full stop
+      '%2F': '/',   // Forward slash
+    };
+  
+    // Loop through the dictionary and replace URL-encoded characters in the URL path
+    for (const key in urlEncodingDict) {
+      if (urlEncodingDict.hasOwnProperty(key)) {
+        const value = urlEncodingDict[key];
+        urlPath = urlPath.replace(new RegExp(key, 'g'), value);
+      }
+    }
+  
+    return urlPath;
+  }
+  
+  // Example usage
+  const urlPath = 'example%20url%20path%2Fwith%20encoded%20characters';
+  const decodedUrlPath = replaceUrlPath(urlPath);
+  console.log(decodedUrlPath);
+  
