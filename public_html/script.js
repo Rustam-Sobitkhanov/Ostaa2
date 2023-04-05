@@ -57,7 +57,7 @@ function getListings() {
                 itemDiv.innerHTML = `
                 <h3>${item.title}</h3>
                 <p>${item.description}</p>
-                <p>${item.image}</p>
+                <img src="${item.image}" alt="${item.description}.jpeg" width="200" height="200">
                 <p>${item.price}</p>
                 <p class="sold">${item.stat.toUpperCase()}</p>
                 `;
@@ -107,8 +107,8 @@ function viewPurchase() {
                 itemDiv.innerHTML = `
                 <h3>${item.title}</h3>
                 <p>${item.description}</p>
-                <p>${item.image}</p>
-                <p>${item.price}</p>
+                <img src="${item.image}" alt="${item.description}.jpeg" width="200" height="200">
+                <img>${item.price}</img>
                 `;
                 itemDiv.classList.add("search-item");
                 searchResultDiv.appendChild(itemDiv);
