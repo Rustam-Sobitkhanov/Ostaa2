@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Ostaa</title>
+    <link rel="stylesheet" href="style-home.css">
+</head>
+<body onload="updateUser()">
+<div class="container">
+    <h1>Ostaa</h1>
+    <hr>
+    <h2 id="welcome-message">Welcome</h2>
+    <div class="button-row">
+        <input type="search" name="searchItem" id="searchItem">
+        <button class='main' type="button" name="search" onclick="searchListings()">Search Listings</button>
+        <button class='main' type="button" name="listing" onclick="getListings()">View your listings</button>
+        <button class='main' type="button" name="purchase" onclick="viewPurchase()">View your purchases</button>
+        <button class='main' type="button" name="createListing" onclick="redirectToListing()">Create a Listing</button>
+    </div>
+
+    <br>
+    <hr>
+    <br>
+
+    <div id="searchResult">
+
+    </div>
+</div>
+<script src="script.js"></script>
+</body>
+</html>

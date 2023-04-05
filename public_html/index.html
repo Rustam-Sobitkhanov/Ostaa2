@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Login</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="container">
+    <h1>Log in</h1>
+    <form id="login-form" method="POST" action="/login">
+        <label for="username-login">Username:</label>
+        <input type="text" id="username-login" name="username" required>
+        <br>
+        <label for="password-login">Password:</label>
+        <input type="password" id="password-login" name="password" required>
+        <br>
+        <button type="submit" class="btn btn-primary">Login</button>
+    </form>
+    <br>
+    <hr>
+    <br>
+    <h1>Register</h1>
+    <form id="register-form" method="POST" action="/register">
+        <label for="username-register">Username:</label>
+        <input type="text" id="username-register" name="username" required>
+        <br>
+        <label for="password-register">Password:</label>
+        <input type="password" id="password-register" name="password" required>
+        <br>
+        <button type="submit" class="btn btn-primary">Register</button>
+    </form>
+</div>
+</body>
+</html>

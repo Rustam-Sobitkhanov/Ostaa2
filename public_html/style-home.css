@@ -1,0 +1,112 @@
+#searchResult {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    align-items: center;
+    margin-top: 20px;
+}
+
+.search-item {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 300px;
+    height: 400px;
+    margin: 20px;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #fff;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+}
+
+.search-item h3 {
+    font-size: 20px;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.search-item p {
+    font-size: 16px;
+    margin: 5px 0;
+}
+
+.search-item button {
+    padding: 10px 20px;
+    font-size: 16px;
+    font-weight: bold;
+    color: #fff;
+    background-color: #4CAF50;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease-in-out;
+}
+
+.search-item button:hover {
+    background-color: #3E8E41;
+}
+
+.search-item p.sold {
+    color: #FF0000;
+    font-size: 18px;
+    font-weight: bold;
+}
+
+
+
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+h1, h2 {
+    margin: 10px;
+    text-align: center;
+}
+
+hr {
+    border: none;
+    border-top: 2px solid #333;
+    margin: 20px 0;
+}
+
+input[type="search"] {
+    padding: 10px;
+    border: 2px solid #ccc;
+    border-radius: 5px;
+    width: 70%;
+    margin-right: 10px;
+}
+
+.main {
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    background-color: #333;
+    color: #fff;
+    cursor: pointer;
+}
+
+button:not(:last-child) {
+    margin-right: 10px;
+}
+
+.button-row {
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: 20px;
+}
+
+.button-row button:first-child {
+    margin-right: auto;
+}
+
