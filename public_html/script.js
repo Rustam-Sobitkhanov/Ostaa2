@@ -14,22 +14,22 @@ function searchListings() {
                     itemDiv.innerHTML = `
                     <h3>${item.title}</h3>
                     <p>${item.description}</p>
-                    <p>${item.image}</p>
-                    <p>${item.price}</p>
+                    <img src="${item.image}" alt="${item.description}.jpeg" width="200" height="200">
+                    <p>Price: ${item.price} USD</p>
                     <button type="button" name="buy">Buy</button>
                     `;
                     const buyButton = itemDiv.querySelector('button[name="buy"]');
                     buyButton.addEventListener('click', function() {
+                        this.disable;
                         this.innerHTML = '<p class="sold">SOLD</p>';
-                        this.disable();
                         purchase(item); // call your buyItem function here and pass in the item object
                     });
                 } else {
                     itemDiv.innerHTML = `
                     <h3>${item.title}</h3>
                     <p>${item.description}</p>
-                    <p>${item.image}</p>
-                    <p>${item.price}</p>
+                    <img src="${item.image}" alt="${item.description}.jpeg" width="200" height="200">
+                    <p>Price: ${item.price} USD</p>
                     <p class="sold">SOLD</p>
                     `;
                 }
@@ -58,7 +58,7 @@ function getListings() {
                 <h3>${item.title}</h3>
                 <p>${item.description}</p>
                 <img src="${item.image}" alt="${item.description}.jpeg" width="200" height="200">
-                <p>${item.price}</p>
+                <p>Price: ${item.price} USD</p>
                 <p class="sold">${item.stat.toUpperCase()}</p>
                 `;
                 itemDiv.classList.add("search-item");
@@ -80,15 +80,20 @@ function addItem() {
     var title = document.getElementById("title-input").value;
     var description = document.getElementById("description-input").value;
     var price = document.getElementById("price-input").value;
-    var image = document.getElementById("image-input").value;
     var stat = document.getElementById("status-input").value;
 
     const xhr = new XMLHttpRequest();
     xhr.open('POST', '/addItem', true);
     xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
-    xhr.send(`usrName=${usrName}&title=${title}&desc=${description}&price=${price}&img=${image}&stat=${stat}`);
+    xhr.send(`usrName=${usrName}&title=${title}&desc=${description}&price=${price}&&stat=${stat}`);
     if (document.getElementById("add-item-form")) {
         document.getElementById("add-item-form").reset();
+        document.getElementsByClassName("loader")[0].style.visibility = "visible";
+        document.getElementById("add-item-form").style.filter = "blur(5px)";
+        document.getElementById("title").innerText = "";
+        //window.location.href = '/home.html';
+    }
+    xhr.onload = () => {
         window.location.href = '/home.html';
     }
 }
@@ -109,7 +114,7 @@ function viewPurchase() {
                 <h3>${item.title}</h3>
                 <p>${item.description}</p>
                 <img src="${item.image}" alt="${item.description}.jpeg" width="200" height="200">
-                <img>${item.price}</img>
+                <img>Price: ${item.price} USD</img>
                 `;
                 itemDiv.classList.add("search-item");
                 searchResultDiv.appendChild(itemDiv);
@@ -154,7 +159,6 @@ function purchase(item) {
     const xhr = new XMLHttpRequest();
     xhr.open('POST', '/purchaseItem', true);
     xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
-    xhr.send(`usrName=${usrName}&title=${item.title}&desc=${item.description}&price=${item.price}&img=${item.image}&stat=${item.stat}`);
-    document.getElementById("add-item-form").reset();
+    xhr.send(`usrName=${usrName}&title=${item.title}&price=${item.price}&desc=${item.description}`);
 }
 

@@ -137,8 +137,7 @@ app.post('/viewPurchases', async (req, res) => {
 
 app.post('/addItem', async (req, res) => {
 
-    const { usrName, title, desc, price, img, stat } = req.body;
-    //axios.get(`http://localhost:3000/image/${title}`).then(resp){}
+    const { usrName, title, desc, price, stat } = req.body;
     axios.get(`http://localhost:3000/image/${title +" "+ desc}`)
         .then(response => {
             const imgUrl = response.data; // Get the image URL from the response
@@ -172,18 +171,19 @@ app.post('/addItem', async (req, res) => {
 });
 
 app.post('/purchaseItem', async (req, res) => {
-    const { usrName, title, price, img } = req.body;
+    const { usrName, title, price, desc } = req.body;
 
     User.findOne({ username: usrName })
         .then(user => {
             if (!user) {
                 return res.status(500).json({ error: 'User not found' });
             }
-            Item.findOne({ title: title, price: price, image: img })
+            Item.findOne({ title: title, price: price, description: desc })
                 .then(item => {
                     if (!item) {
                         return res.status(500).json({ error: 'Item not found' });
                     }
+
                     item.stat = 'sold';
                     item.save();
                     user.purchases.push(item._id);
@@ -210,12 +210,14 @@ app.get('/image/:prompt', async (req, res) => {
     try {
       // Make request to DALL-E API
       const response = await axios.post('https://api.openai.com/v1/images/generations', {
+
         model: 'image-alpha-001',
         prompt: image,
-        num_images: 1
+        num_images: 1,
+        size: "256x256"
       }, {
         headers: {
-          'Authorization': 'Bearer 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', // Replace with your actual API key
+          'Authorization': 'Bearer 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', // Replace with your actual API key
           'Content-Type': 'application/json'
         }
       });
@@ -267,9 +269,4 @@ function replaceUrlPath(urlPath) {
   
     return urlPath;
   }
-  
-  // Example usage
-  const urlPath = 'example%20url%20path%2Fwith%20encoded%20characters';
-  const decodedUrlPath = replaceUrlPath(urlPath);
-  console.log(decodedUrlPath);
   
