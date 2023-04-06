@@ -1,3 +1,10 @@
+/**
+ * Author: Rustambek Sobithanov
+ * Course: CSC 337
+ * Description: Handles the functions created to make the website more interactive.
+ *
+ * @type {string}
+ */
 var username = ""
 function searchListings() {
     const searchItem = document.getElementById('searchItem').value;

@@ -1,3 +1,7 @@
+/* Author: Rustambek Sobithanov
+The file is responsible for styling home.html
+ */
+
 #searchResult {
     display: flex;
     flex-wrap: wrap;

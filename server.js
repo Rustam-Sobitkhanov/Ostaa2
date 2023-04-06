@@ -1,3 +1,9 @@
+/**
+ * Author: Rustambek Sobithanov
+ * Course: CSC 337
+ * Description: This file defines a Node.js server that uses Express and Mongoose to implement
+ *              a simple e-commerce website.
+ */
 require('dotenv').config();
 const express = require('express');
 const app = express();
@@ -30,6 +36,7 @@ mongoose.connect('mongodb+srv://sobitxanovr:2ik19goHn21Ej0RL@ostaa.jf7rett.mongo
 }).then(() => console.log('MongoDB connected...'))
     .catch((err) => console.log(err));
 
+
 const itemSchema = new mongoose.Schema({
     title: String,
     description: String,
@@ -49,11 +56,21 @@ const userSchema = new mongoose.Schema({
 
 const User = mongoose.model('User', userSchema);
 
+/**
+ Sends index.html as the response to the HTTP GET request for the root route
+ @param {object} req - HTTP request object
+ @param {object} res - HTTP response object
+ */
 app.get('/', (req, res) => {
     res.sendFile(`${__dirname}/public_html/index.html`);
 });
 
 
+/**
+ Handles the login request and redirects to /setCookie/:username if the login is successful
+ @param {object} req - HTTP request object
+ @param {object} res - HTTP response object
+ */
 // Handle login request
 app.post('/login', async (req, res) => {
     const { username, password } = req.body;
@@ -66,7 +83,12 @@ app.post('/login', async (req, res) => {
     }
 });
 
-// Handle registration request
+/**
+
+ Handles the registration request and redirects to /setCookie/:username if the registration is successful
+ @param {object} req - HTTP request object
+ @param {object} res - HTTP response object
+ */
 app.post('/register', async (req, res) => {
     const { username, password } = req.body;
     const user = await User.findOne({ username });
@@ -80,6 +102,12 @@ app.post('/register', async (req, res) => {
     }
 });
 
+/**
+ Handles a POST request to search for items by their description.
+ @param {Object} req - The request object containing the search query in the request body.
+ @param {Object} res - The response object to send back the matching items in JSON format.
+ @returns {Object} - The response object containing the matching items in JSON format.
+ */
 app.post('/search', async (req, res) => {
     const { searchItem } = req.body;
     const regex = new RegExp(searchItem, 'i');
@@ -217,7 +245,7 @@ app.get('/image/:prompt', async (req, res) => {
         size: "256x256"
       }, {
         headers: {
-          'Authorization': 'Bearer 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', // Replace with your actual API key
+          'Authorization': 'Bearer ', // Replace with your actual API key
           'Content-Type': 'application/json'
         }
       });

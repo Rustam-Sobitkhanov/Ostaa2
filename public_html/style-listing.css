@@ -1,4 +1,8 @@
-/* Reset default styles for form elements */
+/* Author: Rustambek Sobithanov
+The file is responsible for styling listing.html
+ */
+
+
 * {
     box-sizing: border-box;
 }
